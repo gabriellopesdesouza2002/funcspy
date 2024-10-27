@@ -121,7 +121,7 @@ def ocr_google_vision(pdf, api_key, dpi=300, file_output=uuid.uuid4(), return_te
     
     
     
-def ocr_tesseract_v2(pdf, dpi=300, file_output=uuid.uuid4(), return_text=True, config_tesseract='', limit_pages=None, lang='por', timeout=120, download_tesseract=False):
+def ocr_tesseract(pdf, dpi=300, file_output=uuid.uuid4(), return_text=True, config_tesseract='', limit_pages=None, lang='por', timeout=120, download_tesseract=False):
     """Performs OCR on a PDF file using Tesseract, with advanced customization options.
 
     This advanced feature allows customization of several OCR parameters, such as DPI, language, page limit, and timeout. If the Tesseract binaries are not present, it performs a single request to the Paycon organization's GitHub to download the necessary binaries. This request is crucial for the functionality of the feature but raises important questions about data security.
