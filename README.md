@@ -12,6 +12,26 @@
 
 `pip install -U funcspy`
 
+### Libraryes instalated automaticaly
+* selenium
+* bs4
+* requests
+* html5lib
+* webdriver-manager
+* pretty-html-table
+* xlsxwriter
+* pandas
+* sqlalchemy
+* rich
+* pyinstaller
+* filetype
+* pytesseract
+* tqdm
+* pillow
+* PyMuPDF
+* holidays
+* numpy==1.26.0
+
 ## Example of using some of the most important functions
 
 ### Emails
