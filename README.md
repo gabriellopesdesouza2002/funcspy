@@ -1,4 +1,12 @@
 # funcspy - Functions to help you develop any program or script you want
+## Functions for the main technologies
+
+* Functions for your any project with **Python**, for any moments
+* Functions for send emails easly with **Outlook** and **Gmail**
+* Functions for used in your **GUI** with **Tkinter**
+* Functions for use in your projects with **Openai**
+* Functions most used in projects with **PDF**, exemple, **OCR**
+* Functions for auxiliary in your projects with **Selenium** and **BeautifulSoup**
 
 ## Instalation
 
