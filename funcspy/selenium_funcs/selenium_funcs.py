@@ -3,7 +3,6 @@ import os
 from base64 import b64decode
 from subprocess import getoutput
 from time import sleep
-from selenium import Chrome
 from selenium.webdriver import Chrome 
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver
