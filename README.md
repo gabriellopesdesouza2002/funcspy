@@ -12,7 +12,7 @@
 
 `pip install -U funcspy`
 
-### Libraryes instalated automaticaly
+### Automatically installed libraries
 * selenium
 * bs4
 * requests
