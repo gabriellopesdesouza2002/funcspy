@@ -255,7 +255,8 @@ def terminal(command:str) -> None:
     Args:
         command (str): command to be executed
     """
-    os.system(command)
+    import subprocess
+    subprocess.run(command, shell=True)
 
 
 def current_date_and_time_as_string(format: str='%d/%m/%y %Hh %Mm %Ss') -> str:
@@ -389,21 +390,28 @@ def leave_files_hidden_or_not(path_file_or_dir : str, hidden : bool) -> None:
 
 def make_requirements_txt() -> None:
     """"""
-    os.system("pip freeze > requirements.txt")
+    import subprocess
+    result = subprocess.run(['pip', 'freeze'], capture_output=True, text=True, check=True)
+    with open('requirements.txt', 'w') as f:
+        f.write(result.stdout)
 
 
 def clean_terminal_and_cmd() -> None:
     """This function clears the Terminal / CMD in Linux and Windows"""
-    os.system('cls' if os.name == 'nt' else 'clear')
+    import subprocess
+    subprocess.run(['cls'] if os.name == 'nt' else ['clear'], shell=(os.name == 'nt'))
 
 
 
 def create_virtual_environment(nome_da_venv: str) -> None:
+    import subprocess, re
     nome_da_venv = nome_da_venv.strip()
-    nome_da_venv = nome_da_venv.replace('.', '')
-    nome_da_venv = nome_da_venv.replace('/', '')
-    nome_da_venv = nome_da_venv.replace(',', '')
-    os.system(f'python -m venv {nome_da_venv}')
+    if not re.match(r'^[a-zA-Z0-9_\-]+$', nome_da_venv):
+        raise ValueError(
+            f'Nome de venv inválido: {nome_da_venv!r}. '
+            'Use apenas letras, números, underscores e hífens.'
+        )
+    subprocess.run(['python', '-m', 'venv', nome_da_venv], check=True)
     print(f'Ambiente Virtual com o nome {nome_da_venv} foi criado com sucesso!')
     sleep(2)
 
@@ -475,7 +483,8 @@ def read_json(file_json: str, enconding: str='utf-8') -> dict:
     Returns:
         dict: Dict from the json file
     """
-    return json.load(open(file_json, "r", encoding=enconding))
+    with open(file_json, "r", encoding=enconding) as f:
+        return json.load(f)
 
 
 def convert_bytes(_size: int|float):
@@ -590,11 +599,12 @@ def last_day_of_current_month(format: str='%d/%m/%Y'):
 
 
 def update_all_pip_packages():
-    """Updates all pip packages in the current environment (MAY TAKE A LONG TIME)
-
-    If it doesn't work, run this in the terminal: `pip freeze | %{$_.split('==')[0]} | %{pip install --upgrade $_}`
-    """
-    os.system("""pip freeze | %{$_.split('==')[0]} | %{pip install --upgrade $_}""")
+    """Updates all pip packages in the current environment (MAY TAKE A LONG TIME)"""
+    import subprocess
+    result = subprocess.run(['pip', 'freeze'], capture_output=True, text=True, check=True)
+    packages = [line.split('==')[0] for line in result.stdout.splitlines() if '==' in line]
+    for package in packages:
+        subprocess.run(['pip', 'install', '--upgrade', package], check=False)
 
 
 def returns_elapsed_time(init: float|int, end: float|int, format: bool=True):
