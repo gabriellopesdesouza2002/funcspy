@@ -141,20 +141,22 @@ def send_email_gmail(
         for att in attachments:
             attachment_abspath = os.path.abspath(att)
             part = MIMEBase('application', "octet-stream")
-            part.set_payload(open(attachment_abspath, "rb").read())
+            with open(attachment_abspath, "rb") as f:
+                part.set_payload(f.read())
             encoders.encode_base64(part)
-            file_name = attachment_abspath.split("\\")[-1]
+            file_name = os.path.basename(attachment_abspath)
             print(f'Retrieving attachment: {file_name}')
-            part.add_header(f'Content-Disposition', f'attachment; filename={file_name}')
+            part.add_header('Content-Disposition', 'attachment', filename=file_name)
             msg.attach(part)
     elif isinstance(attachments, str):
         attachment_abspath = os.path.abspath(attachments)
         part = MIMEBase('application', "octet-stream")
-        part.set_payload(open(attachment_abspath, "rb").read())
+        with open(attachment_abspath, "rb") as f:
+            part.set_payload(f.read())
         encoders.encode_base64(part)
-        file_name = attachment_abspath.split("\\")[-1]
+        file_name = os.path.basename(attachment_abspath)
         print(f'Retrieving attachment: {file_name}')
-        part.add_header('Content-Disposition', f'attachment; filename={file_name}')
+        part.add_header('Content-Disposition', 'attachment', filename=file_name)
         msg.attach(part)
 
     # open connection with smtp
