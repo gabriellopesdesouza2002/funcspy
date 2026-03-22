@@ -1,7 +1,7 @@
 import json
 import os
 from base64 import b64decode
-from subprocess import getoutput
+import subprocess
 from time import sleep
 from selenium.webdriver import Chrome 
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -17,7 +17,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from funcspy.python_funcs.python_funcs import *
 from funcspy.regex_funcs.regex_funcs import extract_email
 from funcspy.utils_funcs.utils_funcs import *
-import pickle
+import json
 
 def current_url(driver) -> str:
     """
@@ -125,7 +125,7 @@ def set_page_zoom(driver, zoom: int):
     Returns:
         None
     """
-    driver.execute_script(f"document.body.style.zoom='{zoom}%'")
+    driver.execute_script("document.body.style.zoom=arguments[0]+'%'", int(zoom))
 
 
 def wait_for_element_and_send_keys(wdw:WebDriverWait, string, locator: tuple, in_dom=False) -> None:
@@ -159,7 +159,7 @@ def set_zoom_page(driver, zoom: int) -> None:
         driver (WebDriver): WebDriver
         zoom (int): O zoom para setar.
     """
-    driver.execute_script(f"document.body.style.zoom='{zoom}%'")
+    driver.execute_script("document.body.style.zoom=arguments[0]+'%'", int(zoom))
 
 
 def wait_and_return_element_list(wdw:WebDriverWait, locator: tuple, in_dom=False) -> list[WebElement]:
@@ -333,7 +333,8 @@ def check_vpn_connection(ping_host: str):
 
     log('Verifying VPN connection via IP from config.ini')
     
-    output = getoutput(f'ping {PING_HOST} -n 1')  # -n 1 limits the output
+    result = subprocess.run(['ping', PING_HOST, '-n', '1'], capture_output=True, text=True)
+    output = result.stdout + result.stderr
     if 'Esgotado o tempo' in output or 'time out' in output:
         log('VPN NOT CONNECTED!', 'w')
     else:
@@ -1097,8 +1098,8 @@ def save_cookies(driver, cookie_file: str = 'cookies.pkl') -> str:
         # After login or navigation
         save_cookies(driver, 'my_cookies.pkl')
     """
-    with open(cookie_file, 'wb') as file:
-        pickle.dump(driver.get_cookies(), file)
+    with open(cookie_file, 'w') as file:
+        json.dump(driver.get_cookies(), file)
     return cookie_file
 
 
@@ -1129,8 +1130,8 @@ def load_cookies(driver, cookie_file: str = 'cookies.pkl') -> bool:
             print("Manual login required.")
     """
     try:
-        with open(cookie_file, 'rb') as file:
-            cookies = pickle.load(file)
+        with open(cookie_file, 'r') as file:
+            cookies = json.load(file)
             for cookie in cookies:
                 driver.add_cookie(cookie)
         print("Cookies loaded successfully.")
