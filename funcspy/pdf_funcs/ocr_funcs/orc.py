@@ -39,7 +39,7 @@ def ocr_google_vision(pdf, api_key, dpi=300, file_output=uuid.uuid4(), return_te
         Returns:
             str: The text of the PDF
         """
-        url = f"https://vision.googleapis.com/v1/images:annotate?key={api_key}"
+        url = "https://vision.googleapis.com/v1/images:annotate"
         requests_json = []
         result = ''
         counter = len(files_png)
@@ -62,7 +62,7 @@ def ocr_google_vision(pdf, api_key, dpi=300, file_output=uuid.uuid4(), return_te
                     files_png.remove(i)
                     
 
-                r = requests.post(url=url, json={"requests": requests_json})
+                r = requests.post(url=url, json={"requests": requests_json}, headers={"X-Goog-Api-Key": api_key})
                 requests_json = []  # clean for the next 10
                 if r.status_code == 200:
                     # log(r.text)

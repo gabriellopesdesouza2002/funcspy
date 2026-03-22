@@ -23,7 +23,7 @@ def download_document(link, filename):
     >>> download_document(link, 'output/12312123123132123.pdf')
     """
     try:
-        response = requests.get(link, verify=False)
+        response = requests.get(link)
         with open(os.path.abspath(filename), 'wb') as file:
             file.write(response.content)
         log('File saved successfully.')
