@@ -1,38 +1,49 @@
-# funcspy - Functions to help you develop any program or script you want
-## Functions for the main technologies
+<div align="center">
 
-* Functions for your any project with **Python**, for any moments
-* Functions for send emails easly with **Outlook** and **Gmail**
-* Functions for used in your **GUI** with **Tkinter**
-* Functions for use in your projects with **Openai**
-* Functions most used in projects with **PDF**, exemple, **OCR**
-* Functions for auxiliary in your projects with **Selenium** and **BeautifulSoup**
+# funcspy
 
-## Instalation
+**Reusable Python utilities for automation, document processing, integrations and everyday development tasks.**
 
-`pip install -U funcspy`
+[![PyPI](https://img.shields.io/pypi/v/funcspy?label=PyPI)](https://pypi.org/project/funcspy/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![GitHub](https://img.shields.io/badge/Source-GitHub-181717?logo=github)](https://github.com/gabriellopesdesouza2002/funcspy)
 
-### Automatically installed libraries
-* selenium
-* bs4
-* requests
-* html5lib
-* webdriver-manager
-* pretty-html-table
-* xlsxwriter
-* pandas
-* sqlalchemy
-* rich
-* pyinstaller
-* filetype
-* pytesseract
-* tqdm
-* pillow
-* PyMuPDF
-* holidays
-* numpy==1.26.0
+</div>
 
-## Example of using some of the most important functions
+funcspy is a collection of helper functions developed to avoid rewriting common Python tasks across different projects. It brings together utilities for files, strings, browser automation, desktop interactions, email, AI services and PDF documents.
+
+## Features
+
+| Area | What's included |
+| --- | --- |
+| [Python utilities](funcspy/python_funcs/python_funcs.py) | File operations, text processing, dates, logging and general helpers |
+| [Email](funcspy/emails_funcs/emails_funcs.py) | Gmail/SMTP and Outlook helpers |
+| [PDF and OCR](funcspy/pdf_funcs) | PDF manipulation, Tesseract and Google Vision integrations |
+| [Browser automation](funcspy/selenium_funcs) | Selenium helpers |
+| [OpenAI integrations](funcspy/openai_funcs/apis/apis.py) | Chat, image, vision and transcription wrappers |
+| [Desktop GUI](funcspy/gui_funcs/gui_funcs.py) | Tkinter message dialogs |
+| [Other helpers](funcspy) | Regex, exception-handling and utility modules |
+
+## Installation
+
+```bash
+pip install -U funcspy
+```
+
+Some features require additional local software or external services (for example, a Tesseract installation or API credentials). Review the related example before using an integration.
+
+## Quick example
+
+```python
+from funcspy.python_funcs.python_funcs import remove_accents, take_only_numbers
+
+print(remove_accents("Automação e integração"))
+print(take_only_numbers("Pedido #123-45"))
+```
+
+## Examples by feature
+
+The examples below document the library's helper functions and their parameters. External service names, model availability and third-party APIs may change; verify current compatibility for your environment.
 
 ### Emails
 
@@ -105,7 +116,7 @@ show_popup(title, text)
 Below is an example of how to use the `api_chat_completions` function to send a chat completion request to the OpenAI API.
 
 ```python
-from funcspy.openai_funcs.openai_funcs import api_chat_completions
+from funcspy.openai_funcs.apis.apis import api_chat_completions
 
 # API settings
 api_key = 'your_api_key'
@@ -127,7 +138,7 @@ print(response)
 Below is an example of how to use the `api_image_generation` function to generate images via the OpenAI API.
 
 ```python
-from funcspy.openai_funcs.openai_funcs import api_image_generation
+from funcspy.openai_funcs.apis.apis import api_image_generation
 
 # API settings
 api_key = 'your_api_key'
@@ -146,7 +157,7 @@ print(response)
 Below is an example of how to use the `api_vision` function to process images and answer questions about them using GPT-4 Turbo with Vision.
 
 ```python
-from funcspy.openai_funcs.openai_funcs import api_vision
+from funcspy.openai_funcs.apis.apis import api_vision
 
 # API settings
 api_key = 'your_api_key'
@@ -174,7 +185,7 @@ print(response)
 Below is an example of how to use the `api_audio_transcription` function to transcribe audio using the OpenAI API.
 
 ```python
-from funcspy.openai_funcs.openai_funcs import api_audio_transcription
+from funcspy.openai_funcs.apis.apis import api_audio_transcription
 
 # API settings
 api_key = 'your_api_key'
@@ -195,7 +206,7 @@ print(response)
 Below is an example of how to use the `ocr_tesseract` function to perform OCR on a PDF file using Tesseract with customizable settings.
 
 ```python
-from funcspy.pdf_funcs.ocr_funcs import ocr_tesseract
+from funcspy.pdf_funcs.ocr_funcs.orc import ocr_tesseract
 
 # OCR settings
 pdf = 'path/to/your_pdf_file.pdf'
@@ -228,7 +239,7 @@ print(result)
 Below is an example of how to use the `ocr_google_vision` function to perform OCR on a PDF file using Google Vision API with customizable settings.
 
 ```python
-from funcspy.pdf_funcs.ocr_funcs import ocr_google_vision
+from funcspy.pdf_funcs.ocr_funcs.orc import ocr_google_vision
 
 # OCR settings
 pdf = 'path/to/your_pdf_file.pdf'
@@ -259,7 +270,7 @@ print(result)
 Below is an example of how to use the `make_ocr_in_pdf_offline` function to extract text from a PDF file offline. This function only works with PDFs where the text is selectable.
 
 ```python
-from funcspy.pdf_funcs.ocr_funcs import make_ocr_in_pdf_offline
+from funcspy.pdf_funcs.ocr_funcs.orc import make_ocr_in_pdf_offline
 
 # OCR settings
 path_pdf = 'path/to/your_pdf_file.pdf'
@@ -324,7 +335,7 @@ font_size = 12
 text_to_pdf(text, filename, left_margin, bottom_margin, font, font_size)
 ```
 
-### Utils for any moments
+### General Python utilities
 
 #### Example Usage of `remove_accents` Function
 
@@ -524,17 +535,15 @@ clean_directory(directory_to_clean, timeout_for_clear=10, max_attempts=5, suppor
 
 ## References
 
-* [Rich Formatting for Colors](https://chatgpt.com/c/671e9e2b-8e9c-8008-83aa-61459c33d0ef#:~:text=Rich%20Formatting%20for%20Colors)
 * [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)
 * [Google Vision API](https://cloud.google.com/vision/docs)
 
-# License
+## License
 
-MIT License
+[MIT License](LICENSE)
 
-# Contact
+## Contributing and contact
 
-Questions, thanks and even financial help? Just call me on
+Found an issue or have an improvement in mind? [Open a GitHub issue](https://github.com/gabriellopesdesouza2002/funcspy/issues).
 
-* Linkedin:
-  * [in/gabriel-lopes2002](https://www.linkedin.com/in/gabriel-lopes2002/)
+[LinkedIn — Gabriel Lopes](https://www.linkedin.com/in/gabriel-lopes2002/)
